@@ -1,8 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: ['babel-polyfill', './src/index.js'],
   output: {
     path: path.resolve(__dirname, './release'),
     filename: 'bundle.js',
@@ -12,6 +13,9 @@ module.exports = {
       filename: 'index.html',
       template: './index.html',
     }),
+    new webpack.DefinePlugin({
+      process: { env: {} }
+    })
   ],
   module: {
     rules: [
@@ -40,5 +44,6 @@ module.exports = {
     alias: {
       'react-native$': 'react-native-web',
     },
+    extensions: ['.web.js', '.js'],
   },
 };
